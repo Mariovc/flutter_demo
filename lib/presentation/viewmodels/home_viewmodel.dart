@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:images/domain/entities/image_entity.dart';
 import 'package:images/domain/usecases/get_images_usecase.dart';
 import 'package:images/presentation/viewmodels/root_viewmodel.dart';
@@ -46,8 +47,8 @@ class HomeViewModel extends RootViewModel<ImageListViewState> {
         final nextPageKey = pageKey + 1;
         _pagingController.appendPage(newItems, nextPageKey);
       }
-    } catch (error) {
-      _pagingController.error = error;
+    } on DioException catch (error) {
+      _pagingController.error = error.response?.data ?? error.message;
     }
   }
 

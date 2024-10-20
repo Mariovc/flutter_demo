@@ -91,18 +91,19 @@ class _HomePageState
           builderDelegate: PagedChildBuilderDelegate<ImageEntity>(
             itemBuilder: _getItem,
             firstPageErrorIndicatorBuilder: (context) => ErrorCard(
-              message: 'Error loading page', // TODO: Localize
+              message: viewModel.controller.error,
               onRetry: viewModel.loadItems,
             ),
             noItemsFoundIndicatorBuilder: (context) => const Center(
               child: ErrorPlacehoder(
-                title: 'Home Page', // TODO localize
-                subtitle: 'empty list', // TODO localize
+                title: 'No results found', // TODO localize
+                subtitle:
+                    'Try searching with different keywords.', // TODO localize
                 icon: Icons.search,
               ),
             ),
             newPageErrorIndicatorBuilder: (context) => ErrorCard(
-              message: 'New page error', // TODO: Localize
+              message: viewModel.controller.error,
               onRetry: viewModel.controller.retryLastFailedRequest,
             ),
             firstPageProgressIndicatorBuilder: (context) =>
