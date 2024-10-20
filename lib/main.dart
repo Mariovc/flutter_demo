@@ -3,7 +3,7 @@ import 'package:images/core/di/injection.dart';
 import 'package:images/presentation/widgets/pages/home_page.dart';
 
 void main() {
-  configureDependencies();
+  configureDependencies(env: const String.fromEnvironment('ENVIRONMENT'));
   runApp(const MyApp());
 }
 
