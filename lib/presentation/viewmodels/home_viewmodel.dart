@@ -5,7 +5,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable()
-class ImageListViewmodel extends RootViewModel<ImageListViewState> {
+class HomeViewModel extends RootViewModel<ImageListViewState> {
   static const _pageSize = 10;
 
   final PagingController<int, ImageEntity> _pagingController =
@@ -14,7 +14,7 @@ class ImageListViewmodel extends RootViewModel<ImageListViewState> {
 
   PagingController<int, ImageEntity> get controller => _pagingController;
 
-  ImageListViewmodel(
+  HomeViewModel(
     this.getImagesUseCase,
   ) : super(const Success()) {
     _pagingController.addPageRequestListener((pageKey) {
