@@ -16,6 +16,14 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) => UserDto(
       portfolioUrl: json['portfolio_url'] as String?,
       bio: json['bio'] as String?,
       location: json['location'] as String?,
+      profileImage: json['profile_image'] == null
+          ? null
+          : ProfileImageDto.fromJson(
+              json['profile_image'] as Map<String, dynamic>),
+      totalLikes: (json['total_likes'] as num?)?.toInt() ?? 0,
+      totalPhotos: (json['total_photos'] as num?)?.toInt() ?? 0,
+      totalCollections: (json['total_collections'] as num?)?.toInt() ?? 0,
+      instagramUsername: json['instagram_username'] as String?,
     );
 
 Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
@@ -28,4 +36,9 @@ Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
       'portfolio_url': instance.portfolioUrl,
       'bio': instance.bio,
       'location': instance.location,
+      'profile_image': instance.profileImage,
+      'total_likes': instance.totalLikes,
+      'total_photos': instance.totalPhotos,
+      'total_collections': instance.totalCollections,
+      'instagram_username': instance.instagramUsername,
     };

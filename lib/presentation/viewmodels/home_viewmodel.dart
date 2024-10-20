@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:images/domain/entities/image_entity.dart';
 import 'package:images/domain/usecases/get_images_usecase.dart';
 import 'package:images/presentation/navigation/main_navigation.dart';
@@ -61,8 +60,8 @@ class HomeViewModel extends RootViewModel<ImageListViewState> {
     _pagingController.refresh();
   }
 
-  void navigateToDetail() {
-    _navigator.navigateToDetail();
+  void navigateToDetail(ImageEntity image) {
+    _navigator.navigateToDetail(image);
   }
 }
 

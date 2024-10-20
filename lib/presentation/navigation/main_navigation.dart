@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:images/domain/entities/image_entity.dart';
 import 'package:images/presentation/widgets/pages/detail_page.dart';
 import 'package:images/presentation/widgets/pages/home_page.dart';
 
@@ -20,15 +21,16 @@ class MainNavigation {
           GoRoute(
             name: RouteNames.detail,
             path: RouteNames.detail,
-            builder: (context, state) => const DetailPage(),
+            builder: (context, state) =>
+                DetailPage(image: state.extra as ImageEntity),
           ),
         ],
       ),
     ],
   );
 
-  Future<void> navigateToDetail() {
-    return _router.pushNamed(RouteNames.detail);
+  Future<void> navigateToDetail(ImageEntity image) {
+    return _router.pushNamed(RouteNames.detail, extra: image);
   }
 }
 
