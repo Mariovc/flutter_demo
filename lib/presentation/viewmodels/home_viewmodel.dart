@@ -10,7 +10,7 @@ class HomeViewModel extends RootViewModel<ImageListViewState> {
 
   final PagingController<int, ImageEntity> _pagingController =
       PagingController(firstPageKey: 1);
-  final String _query = '*';
+  String _query = '';
 
   PagingController<int, ImageEntity> get controller => _pagingController;
 
