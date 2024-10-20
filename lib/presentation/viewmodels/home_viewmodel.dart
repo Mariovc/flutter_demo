@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:images/domain/entities/image_entity.dart';
 import 'package:images/domain/usecases/get_images_usecase.dart';
@@ -9,6 +11,7 @@ import 'package:injectable/injectable.dart';
 @Injectable()
 class HomeViewModel extends RootViewModel<ImageListViewState> {
   static const _pageSize = 10;
+  static const _searchDelay = 500;
 
   final GetImagesUseCase _getImagesUseCase;
   final MainNavigation _navigator;
@@ -16,6 +19,7 @@ class HomeViewModel extends RootViewModel<ImageListViewState> {
   final PagingController<int, ImageEntity> _pagingController =
       PagingController(firstPageKey: 1);
   String _query = '';
+  Timer? _debounce;
 
   PagingController<int, ImageEntity> get controller => _pagingController;
 
@@ -57,7 +61,18 @@ class HomeViewModel extends RootViewModel<ImageListViewState> {
 
   void search(String value) {
     _query = value;
-    _pagingController.refresh();
+    _delayedSearch();
+  }
+
+  void _delayedSearch() {
+    // Cancel any existing timer
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+
+    // Start a new timer
+    _debounce = Timer(const Duration(milliseconds: _searchDelay), () {
+      // Perform the search operation
+      loadItems();
+    });
   }
 
   void navigateToDetail(ImageEntity image) {
