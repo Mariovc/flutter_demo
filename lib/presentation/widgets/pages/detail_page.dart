@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:images/domain/entities/image_entity.dart';
 import 'package:images/presentation/viewmodels/detail_viewmodel.dart';
@@ -29,10 +30,25 @@ class DetailPage extends RootPage<DetailViewState, DetailViewModel> {
           children: [
             Hero(
               tag: image.id,
-              child: Image.network(
-                image.url,
+              child: CachedNetworkImage(
+                imageUrl: image.url,
+                placeholder: (context, url) => Container(
+                  height: 300.0,
+                  width: double.infinity,
+                  color: Colors.grey[200],
+                  child: Icon(
+                    Icons.image,
+                    size: 50.0,
+                    color: Colors.grey.withOpacity(0.4),
+                  ),
+                ),
+                errorWidget: (context, url, error) => Icon(
+                  Icons.error,
+                  size: 50.0,
+                  color: Colors.red.withOpacity(0.4),
+                ),
+                height: 300.0,
                 width: double.infinity,
-                height: 300,
                 fit: BoxFit.cover,
               ),
             ),
