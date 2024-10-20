@@ -9,7 +9,8 @@ class UrlsDto {
   final String regular;
   final String small;
   final String thumb;
-  final String? small_s3;
+  @JsonKey(name: 'small_s3')
+  final String? smallS3;
 
   UrlsDto({
     required this.raw,
@@ -17,7 +18,7 @@ class UrlsDto {
     required this.regular,
     required this.small,
     required this.thumb,
-    this.small_s3,
+    this.smallS3,
   });
 
   factory UrlsDto.fromJson(Map<String, dynamic> json) =>

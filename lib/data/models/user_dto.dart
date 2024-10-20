@@ -7,10 +7,19 @@ class UserDto {
   final String id;
   final String username;
   final String name;
-  final String? first_name;
-  final String? last_name;
-  final String? twitter_username;
-  final String? portfolio_url;
+  
+  @JsonKey(name: 'first_name')
+  final String? firstName;
+  
+  @JsonKey(name: 'last_name')
+  final String? lastName;
+  
+  @JsonKey(name: 'twitter_username')
+  final String? twitterUsername;
+  
+  @JsonKey(name: 'portfolio_url')
+  final String? portfolioUrl;
+  
   final String? bio;
   final String? location;
 
@@ -18,10 +27,10 @@ class UserDto {
     required this.id,
     required this.username,
     required this.name,
-    this.first_name,
-    this.last_name,
-    this.twitter_username,
-    this.portfolio_url,
+    this.firstName,
+    this.lastName,
+    this.twitterUsername,
+    this.portfolioUrl,
     this.bio,
     this.location,
   });

@@ -12,7 +12,7 @@ UrlsDto _$UrlsDtoFromJson(Map<String, dynamic> json) => UrlsDto(
       regular: json['regular'] as String,
       small: json['small'] as String,
       thumb: json['thumb'] as String,
-      small_s3: json['small_s3'] as String?,
+      smallS3: json['small_s3'] as String?,
     );
 
 Map<String, dynamic> _$UrlsDtoToJson(UrlsDto instance) => <String, dynamic>{
@@ -21,5 +21,5 @@ Map<String, dynamic> _$UrlsDtoToJson(UrlsDto instance) => <String, dynamic>{
       'regular': instance.regular,
       'small': instance.small,
       'thumb': instance.thumb,
-      'small_s3': instance.small_s3,
+      'small_s3': instance.smallS3,
     };

@@ -6,12 +6,13 @@ part 'search_result_dto.g.dart';
 @JsonSerializable()
 class SearchResultDto {
   final int total;
-  final int total_pages;
+  @JsonKey(name: 'total_pages')
+  final int totalPages;
   final List<ImageDto> results;
 
   SearchResultDto({
     required this.total,
-    required this.total_pages,
+    required this.totalPages,
     required this.results,
   });
 

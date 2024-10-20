@@ -9,7 +9,7 @@ part of 'search_result_dto.dart';
 SearchResultDto _$SearchResultDtoFromJson(Map<String, dynamic> json) =>
     SearchResultDto(
       total: (json['total'] as num).toInt(),
-      total_pages: (json['total_pages'] as num).toInt(),
+      totalPages: (json['total_pages'] as num).toInt(),
       results: (json['results'] as List<dynamic>)
           .map((e) => ImageDto.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -18,6 +18,6 @@ SearchResultDto _$SearchResultDtoFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$SearchResultDtoToJson(SearchResultDto instance) =>
     <String, dynamic>{
       'total': instance.total,
-      'total_pages': instance.total_pages,
+      'total_pages': instance.totalPages,
       'results': instance.results,
     };

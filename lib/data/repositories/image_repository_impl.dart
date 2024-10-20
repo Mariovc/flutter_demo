@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:images/data/models/image_dto.dart';
+import 'package:images/data/models/search_result_dto.dart';
 import 'package:images/domain/entities/image_entity.dart';
 import 'package:images/domain/repositories/image_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -28,17 +28,7 @@ class ImageRepositoryImpl implements ImageRepository {
       'client_id': apiKey,
     });
 
-    print('object');
-    // TODO
-    // final response = await dio
-    //     .get('https://api.unsplash.com/search/photos', queryParameters: {
-    //   'query': query,
-    //   'page': page,
-    //   'client_id': 'YOUR_UNSPLASH_API_KEY',
-    // });
-
-    final List<dynamic> data = response.data['results'];
-    return data.map((json) => ImageDto.fromJson(json).toEntity()).toList();
-    // return Future.value([]);
+    final result = SearchResultDto.fromJson(response.data);
+    return result.results.map((e) => e.toEntity()).toList();
   }
 }

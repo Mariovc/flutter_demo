@@ -75,7 +75,7 @@ class _HomePageState
           )
         ],
         body: PagedGridView<int, ImageEntity>(
-          padding: const EdgeInsets.all(0.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           pagingController: viewModel.controller,
           builderDelegate: PagedChildBuilderDelegate<ImageEntity>(
             itemBuilder: _getItem,
