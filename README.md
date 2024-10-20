@@ -1,4 +1,4 @@
-# Gibay
+# Flutter Demo App
 
 ## Introduction
 
@@ -20,6 +20,7 @@ Demo:
 - Dependency injection ([Get it](https://pub.dev/packages/get_it) and [Injectable](https://pub.dev/packages/injectable)).
 - Environment configuration (dev, prod)
 - Paged server requests ([Infinite Scroll Pagination](https://pub.dev/packages/infinite_scroll_pagination))
+- Testing ([flutter_test](https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html), [Mockito](https://pub.dev/packages/mockito))
 
 ## Environment
 
@@ -28,7 +29,7 @@ The application has two environments and each one has its own configuration file
 - dev: `.env/dev.json`
 - prod: `.env/prod.json`
 
-Inside each one, you can find sensitive information that shouldn't be committed to this repository. However, I have included it to provide an easy way to launch this project. Please replace the API key with your own.
+Inside each one, you can find sensitive information that shouldn't be committed to this repository. However, I have included it to provide an easy way to launch this project. Please, **replace the API key** with your own.
 
 ## Run and build
 
