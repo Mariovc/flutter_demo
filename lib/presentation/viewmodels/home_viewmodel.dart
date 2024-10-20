@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:images/domain/entities/image_entity.dart';
 import 'package:images/domain/usecases/get_images_usecase.dart';
 import 'package:images/presentation/viewmodels/root_viewmodel.dart';
@@ -5,16 +6,16 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable()
-class ImageListViewmodel extends RootViewModel<ImageListViewState> {
+class HomeViewModel extends RootViewModel<ImageListViewState> {
   static const _pageSize = 10;
 
   final PagingController<int, ImageEntity> _pagingController =
       PagingController(firstPageKey: 1);
-  final String _query = '*';
+  String _query = '';
 
   PagingController<int, ImageEntity> get controller => _pagingController;
 
-  ImageListViewmodel(
+  HomeViewModel(
     this.getImagesUseCase,
   ) : super(const Success()) {
     _pagingController.addPageRequestListener((pageKey) {
@@ -46,9 +47,14 @@ class ImageListViewmodel extends RootViewModel<ImageListViewState> {
         final nextPageKey = pageKey + 1;
         _pagingController.appendPage(newItems, nextPageKey);
       }
-    } catch (error) {
-      _pagingController.error = error;
+    } on DioException catch (error) {
+      _pagingController.error = error.response?.data ?? error.message;
     }
+  }
+
+  void search(String value) {
+    _query = value;
+    _pagingController.refresh();
   }
 }
 

@@ -7,73 +7,105 @@ import 'package:images/presentation/widgets/components/error_placehoder.dart';
 import 'package:images/presentation/widgets/pages/root_page.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class HomePage
-    extends RootPageStateful<ImageListViewState, ImageListViewmodel> {
+class HomePage extends RootPageStateful<ImageListViewState, HomeViewModel> {
   const HomePage({super.key});
 
   @override
-  RootScreenState<ImageListViewState, ImageListViewmodel, HomePage>
-      createState() => _HomePageState();
+  RootScreenState<ImageListViewState, HomeViewModel, HomePage> createState() =>
+      _HomePageState();
 }
 
 class _HomePageState
-    extends RootScreenState<ImageListViewState, ImageListViewmodel, HomePage> {
-  @override
-  void listenState(BuildContext context, ImageListViewState state) {
-    if (state is Error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(state.message),
-        ),
-      );
-    }
-  }
+    extends RootScreenState<ImageListViewState, HomeViewModel, HomePage> {
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void dispose() {
     super.dispose();
     viewModel.dispose();
+    _focusNode.dispose();
   }
 
   @override
   Widget buildView(
     BuildContext context,
     ImageListViewState state,
-    ImageListViewmodel viewModel,
+    HomeViewModel viewModel,
   ) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
-      ),
-      body: PagedGridView<int, ImageEntity>(
-        pagingController: viewModel.controller,
-        builderDelegate: PagedChildBuilderDelegate<ImageEntity>(
-          itemBuilder: _getItem,
-          firstPageErrorIndicatorBuilder: (context) => ErrorCard(
-            message: 'Error loading page', // TODO: Localize
-            onRetry: viewModel.loadItems,
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            pinned: true,
+            centerTitle: true,
+            title: const Text('Home Page'),
+            forceElevated: innerBoxIsScrolled,
           ),
-          noItemsFoundIndicatorBuilder: (context) => const Center(
-            child: ErrorPlacehoder(
-              title: 'Home Page', // TODO localize
-              subtitle: 'empty list', // TODO localize
-              icon: Icons.search,
+          SliverAppBar(
+            primary: false,
+            floating: true,
+            snap: true,
+            forceElevated: innerBoxIsScrolled,
+            title: TextField(
+              focusNode: _focusNode,
+              onTapOutside: (event) => _focusNode.unfocus(),
+              decoration: InputDecoration(
+                hintText: 'Search ...',
+                hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.7),
+                    ),
+                prefixIcon: const Icon(Icons.search),
+                filled: true,
+                fillColor: Theme.of(context).colorScheme.surfaceContainer,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
+              ),
+              textCapitalization: TextCapitalization.sentences,
+              onChanged: viewModel.search,
             ),
+            bottom: const PreferredSize(
+                preferredSize: Size.fromHeight(8), child: SizedBox()),
+          )
+        ],
+        body: PagedGridView<int, ImageEntity>(
+          padding: const EdgeInsets.all(0.0),
+          pagingController: viewModel.controller,
+          builderDelegate: PagedChildBuilderDelegate<ImageEntity>(
+            itemBuilder: _getItem,
+            firstPageErrorIndicatorBuilder: (context) => ErrorCard(
+              message: viewModel.controller.error,
+              onRetry: viewModel.loadItems,
+            ),
+            noItemsFoundIndicatorBuilder: (context) => const Center(
+              child: ErrorPlacehoder(
+                title: 'No results found', // TODO localize
+                subtitle:
+                    'Try searching with different keywords.', // TODO localize
+                icon: Icons.search,
+              ),
+            ),
+            newPageErrorIndicatorBuilder: (context) => ErrorCard(
+              message: viewModel.controller.error,
+              onRetry: viewModel.controller.retryLastFailedRequest,
+            ),
+            firstPageProgressIndicatorBuilder: (context) =>
+                const Center(child: CircularProgressIndicator()),
+            newPageProgressIndicatorBuilder: (context) =>
+                const Center(child: CircularProgressIndicator()),
           ),
-          newPageErrorIndicatorBuilder: (context) => ErrorCard(
-            message: 'New page error', // TODO: Localize
-            onRetry: viewModel.controller.retryLastFailedRequest,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 4,
+            mainAxisSpacing: 4,
+            mainAxisExtent: 200,
           ),
-          firstPageProgressIndicatorBuilder: (context) =>
-              const Center(child: CircularProgressIndicator()),
-          newPageProgressIndicatorBuilder: (context) =>
-              const Center(child: CircularProgressIndicator()),
-        ),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 4,
-          mainAxisSpacing: 4,
-          mainAxisExtent: 200,
         ),
       ),
     );
