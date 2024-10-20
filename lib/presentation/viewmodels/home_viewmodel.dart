@@ -50,6 +50,11 @@ class HomeViewModel extends RootViewModel<ImageListViewState> {
       _pagingController.error = error;
     }
   }
+
+  void search(String value) {
+    _query = value;
+    _pagingController.refresh();
+  }
 }
 
 sealed class ImageListViewState extends ViewState {
