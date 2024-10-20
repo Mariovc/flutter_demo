@@ -20,17 +20,6 @@ class _HomePageState
   final FocusNode _focusNode = FocusNode();
 
   @override
-  void listenState(BuildContext context, ImageListViewState state) {
-    if (state is Error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(state.message),
-        ),
-      );
-    }
-  }
-
-  @override
   void dispose() {
     super.dispose();
     viewModel.dispose();
