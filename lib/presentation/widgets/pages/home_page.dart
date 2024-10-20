@@ -7,16 +7,16 @@ import 'package:images/presentation/widgets/components/error_placehoder.dart';
 import 'package:images/presentation/widgets/pages/root_page.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class HomePage extends RootPageStateful<ImageListViewState, HomeViewModel> {
+class HomePage extends RootPageStateful<HomeViewModelState, HomeViewModel> {
   const HomePage({super.key});
 
   @override
-  RootScreenState<ImageListViewState, HomeViewModel, HomePage> createState() =>
+  RootScreenState<HomeViewModelState, HomeViewModel, HomePage> createState() =>
       _HomePageState();
 }
 
 class _HomePageState
-    extends RootScreenState<ImageListViewState, HomeViewModel, HomePage> {
+    extends RootScreenState<HomeViewModelState, HomeViewModel, HomePage> {
   final FocusNode _focusNode = FocusNode();
 
   @override
@@ -29,7 +29,7 @@ class _HomePageState
   @override
   Widget buildView(
     BuildContext context,
-    ImageListViewState state,
+    HomeViewModelState state,
     HomeViewModel viewModel,
   ) {
     return Scaffold(

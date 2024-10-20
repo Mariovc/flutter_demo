@@ -9,7 +9,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable()
-class HomeViewModel extends RootViewModel<ImageListViewState> {
+class HomeViewModel extends RootViewModel<HomeViewModelState> {
   static const _pageSize = 10;
   static const _searchDelay = 500;
 
@@ -28,7 +28,7 @@ class HomeViewModel extends RootViewModel<ImageListViewState> {
     this._getImagesUseCase,
   ) : super(const Success()) {
     _pagingController.addPageRequestListener((pageKey) {
-      _fetchPage(pageKey);
+      fetchPage(pageKey);
     });
   }
 
@@ -40,7 +40,7 @@ class HomeViewModel extends RootViewModel<ImageListViewState> {
     _pagingController.refresh();
   }
 
-  Future<void> _fetchPage(int pageKey) async {
+  Future<void> fetchPage(int pageKey) async {
     try {
       final newItems = await _getImagesUseCase(
         query: _query,
@@ -66,13 +66,13 @@ class HomeViewModel extends RootViewModel<ImageListViewState> {
 
   void _delayedSearch() {
     // Cancel any existing timer
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    // if (_debounce?.isActive ?? false) _debounce!.cancel();
 
     // Start a new timer
-    _debounce = Timer(const Duration(milliseconds: _searchDelay), () {
-      // Perform the search operation
-      loadItems();
-    });
+    // _debounce = Timer(const Duration(milliseconds: _searchDelay), () {
+    // Perform the search operation
+    loadItems();
+    // });
   }
 
   void navigateToDetail(ImageEntity image) {
@@ -80,20 +80,20 @@ class HomeViewModel extends RootViewModel<ImageListViewState> {
   }
 }
 
-sealed class ImageListViewState extends ViewState {
-  const ImageListViewState();
+sealed class HomeViewModelState extends ViewState {
+  const HomeViewModelState();
 }
 
-class Loading extends ImageListViewState {
+class Loading extends HomeViewModelState {
   const Loading();
 }
 
-class Error extends ImageListViewState {
+class Error extends HomeViewModelState {
   final String message;
 
   const Error(this.message);
 }
 
-class Success extends ImageListViewState {
+class Success extends HomeViewModelState {
   const Success();
 }
