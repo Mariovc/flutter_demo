@@ -16,6 +16,8 @@ import 'package:images/data/repositories/image_repository_impl.dart' as _i711;
 import 'package:images/data/services/dio_service.dart' as _i178;
 import 'package:images/domain/repositories/image_repository.dart' as _i64;
 import 'package:images/domain/usecases/get_images_usecase.dart' as _i509;
+import 'package:images/presentation/navigation/main_navigation.dart' as _i873;
+import 'package:images/presentation/viewmodels/detail_viewmodel.dart' as _i897;
 import 'package:images/presentation/viewmodels/home_viewmodel.dart' as _i510;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -32,7 +34,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final diModule = _$DiModule();
     final dioService = _$DioService();
+    gh.factory<_i897.DetailViewModel>(() => _i897.DetailViewModel());
     gh.singleton<_i925.Env>(() => diModule.env);
+    gh.singleton<_i873.MainNavigation>(() => diModule.navigator);
     gh.lazySingleton<_i361.Dio>(() => dioService.dio);
     gh.factory<_i64.ImageRepository>(() => _i711.ImageRepositoryImpl(
           gh<_i361.Dio>(),
@@ -40,8 +44,10 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i509.GetImagesUseCase>(
         () => _i509.GetImagesUseCase(gh<_i64.ImageRepository>()));
-    gh.factory<_i510.HomeViewModel>(
-        () => _i510.HomeViewModel(gh<_i509.GetImagesUseCase>()));
+    gh.factory<_i510.HomeViewModel>(() => _i510.HomeViewModel(
+          gh<_i873.MainNavigation>(),
+          gh<_i509.GetImagesUseCase>(),
+        ));
     return this;
   }
 }
