@@ -119,26 +119,29 @@ class _HomePageState
       ),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-        child: CachedNetworkImage(
-          imageUrl: image.url,
-          placeholder: (context, url) => Container(
+        child: InkWell(
+          onTap: viewModel.navigateToDetail,
+          child: CachedNetworkImage(
+            imageUrl: image.url,
+            placeholder: (context, url) => Container(
+              height: 200.0,
+              width: double.infinity,
+              color: Colors.grey[200],
+              child: Icon(
+                Icons.image,
+                size: 50.0,
+                color: Colors.grey.withOpacity(0.4),
+              ),
+            ),
+            errorWidget: (context, url, error) => Icon(
+              Icons.error,
+              size: 50.0,
+              color: Colors.red.withOpacity(0.4),
+            ),
             height: 200.0,
             width: double.infinity,
-            color: Colors.grey[200],
-            child: Icon(
-              Icons.image,
-              size: 50.0,
-              color: Colors.grey.withOpacity(0.4),
-            ),
+            fit: BoxFit.cover,
           ),
-          errorWidget: (context, url, error) => Icon(
-            Icons.error,
-            size: 50.0,
-            color: Colors.red.withOpacity(0.4),
-          ),
-          height: 200.0,
-          width: double.infinity,
-          fit: BoxFit.cover,
         ),
       ),
     );
