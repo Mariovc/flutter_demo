@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ErrorCard extends StatelessWidget {
@@ -30,7 +31,7 @@ class ErrorCard extends StatelessWidget {
               if (onRetry != null)
                 ElevatedButton(
                   onPressed: onRetry,
-                  child: const Text('Retry'), // TODO use localization
+                  child: Text(context.tr('common.retry_button')),
                 ),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:images/domain/entities/image_entity.dart';
 import 'package:images/presentation/viewmodels/home_viewmodel.dart';
@@ -39,7 +40,7 @@ class _HomePageState
           SliverAppBar(
             pinned: true,
             centerTitle: true,
-            title: const Text('Home Page'),
+            title: Text(context.tr('home.title')),
             forceElevated: innerBoxIsScrolled,
           ),
           SliverAppBar(
@@ -51,7 +52,7 @@ class _HomePageState
               focusNode: _focusNode,
               onTapOutside: (event) => _focusNode.unfocus(),
               decoration: InputDecoration(
-                hintText: 'Search ...',
+                hintText: context.tr('home.search_hint'),
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(context)
                           .colorScheme
@@ -83,11 +84,10 @@ class _HomePageState
               message: viewModel.controller.error,
               onRetry: viewModel.loadItems,
             ),
-            noItemsFoundIndicatorBuilder: (context) => const Center(
+            noItemsFoundIndicatorBuilder: (context) => Center(
               child: ErrorPlacehoder(
-                title: 'No results found', // TODO localize
-                subtitle:
-                    'Try searching with different keywords.', // TODO localize
+                title: context.tr('home.no_results_title'),
+                subtitle: context.tr('home.no_results_message'),
                 icon: Icons.search,
               ),
             ),

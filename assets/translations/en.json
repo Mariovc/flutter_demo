@@ -1,0 +1,18 @@
+{
+    "common": {
+        "retry_button": "Retry"
+    },
+    "home": {
+        "title": "Home",
+        "search_hint": "Search ...",
+        "no_results_title": "No results found",
+        "no_results_message": "Try searching with different keywords."
+    },
+    "image_detail": {
+        "image_likes_count": "{numLikes} likes",
+        "posted_on": "Posted on {date}",
+        "user_photos": "Photos",
+        "user_collections": "Collections",
+        "user_likes": "Likes"
+    }
+}

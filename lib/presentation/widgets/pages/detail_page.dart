@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:images/domain/entities/image_entity.dart';
 import 'package:images/presentation/viewmodels/detail_viewmodel.dart';
 import 'package:images/presentation/widgets/pages/root_page.dart';
-import 'package:intl/intl.dart';
 
 class DetailPage extends RootPage<DetailViewState, DetailViewModel> {
   final ImageEntity image;
@@ -62,7 +62,10 @@ class DetailPage extends RootPage<DetailViewState, DetailViewModel> {
                       const Icon(Icons.favorite, color: Colors.red),
                       const SizedBox(width: 5),
                       Text(
-                        '${image.likes} likes', // TODO localize
+                        context
+                            .tr('image_detail.image_likes_count', namedArgs: {
+                          'numLikes': image.likes.toString(),
+                        }),
                         style: const TextStyle(fontSize: 16),
                       ),
                     ],
@@ -107,7 +110,9 @@ class DetailPage extends RootPage<DetailViewState, DetailViewModel> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    'Posted on ${DateFormat.yMMMd().format(image.createdAt)}',
+                    context.tr('image_detail.posted_on', namedArgs: {
+                      'date': DateFormat.yMMMd().format(image.createdAt)
+                    }),
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   const SizedBox(height: 20),
@@ -118,17 +123,17 @@ class DetailPage extends RootPage<DetailViewState, DetailViewModel> {
                     children: [
                       _buildUserInfo(
                         icon: Icons.photo,
-                        label: 'Photos',
+                        label: context.tr('image_detail.user_photos'),
                         value: image.user.totalPhotos.toString(),
                       ),
                       _buildUserInfo(
                         icon: Icons.collections,
-                        label: 'Collections',
+                        label: context.tr('image_detail.user_collections'),
                         value: image.user.totalCollections.toString(),
                       ),
                       _buildUserInfo(
                         icon: Icons.thumb_up,
-                        label: 'Likes',
+                        label: context.tr('image_detail.user_likes'),
                         value: image.user.totalLikes.toString(),
                       ),
                     ],
