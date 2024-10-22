@@ -12,6 +12,10 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:images/core/di/environment.dart' as _i925;
 import 'package:images/core/di/injection.dart' as _i439;
+import 'package:images/data/datasources/image/image_remote_datasource.dart'
+    as _i246;
+import 'package:images/data/datasources/image/image_remote_datasource_implementation.dart'
+    as _i976;
 import 'package:images/data/repositories/image_repository_impl.dart' as _i711;
 import 'package:images/data/services/dio_service.dart' as _i178;
 import 'package:images/domain/repositories/image_repository.dart' as _i64;
@@ -38,10 +42,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i925.Env>(() => diModule.env);
     gh.singleton<_i873.MainNavigation>(() => diModule.navigator);
     gh.lazySingleton<_i361.Dio>(() => dioService.dio);
-    gh.factory<_i64.ImageRepository>(() => _i711.ImageRepositoryImpl(
+    gh.factory<_i246.ImageRemoteDatasource>(() => _i976.ImageRepositoryImpl(
           gh<_i361.Dio>(),
           gh<_i925.Env>(),
         ));
+    gh.factory<_i64.ImageRepository>(
+        () => _i711.ImageRepositoryImpl(gh<_i246.ImageRemoteDatasource>()));
     gh.factory<_i509.GetImagesUseCase>(
         () => _i509.GetImagesUseCase(gh<_i64.ImageRepository>()));
     gh.factory<_i510.HomeViewModel>(() => _i510.HomeViewModel(
