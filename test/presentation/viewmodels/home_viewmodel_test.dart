@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:images/presentation/viewmodels/home_viewmodel.dart';
 import 'package:mockito/mockito.dart';
@@ -51,7 +52,10 @@ void main() {
     await viewModel.fetchPage(1);
     expect(viewModel.controller.itemList, [image]);
 
-    viewModel.search('test');
+    fakeAsync((async) {
+      viewModel.search('test');
+      async.elapse(const Duration(milliseconds: 500));
+    });
     expect(viewModel.controller.itemList, null);
   });
 

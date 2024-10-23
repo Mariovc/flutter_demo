@@ -66,13 +66,13 @@ class HomeViewModel extends RootViewModel<HomeViewModelState> {
 
   void _delayedSearch() {
     // Cancel any existing timer
-    // if (_debounce?.isActive ?? false) _debounce!.cancel();
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
 
     // Start a new timer
-    // _debounce = Timer(const Duration(milliseconds: _searchDelay), () {
-    // Perform the search operation
-    loadItems();
-    // });
+    _debounce = Timer(const Duration(milliseconds: _searchDelay), () {
+      // Perform the search operation
+      loadItems();
+    });
   }
 
   void navigateToDetail(ImageEntity image) {
