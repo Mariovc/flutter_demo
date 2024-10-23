@@ -110,7 +110,7 @@ class DetailPage extends RootPage<DetailViewState, DetailViewModel> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    context.tr('image_detail.posted_on', namedArgs: {
+                    'image_detail.posted_on'.tr(namedArgs: {
                       'date': DateFormat.yMMMd().format(image.createdAt)
                     }),
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
@@ -123,17 +123,17 @@ class DetailPage extends RootPage<DetailViewState, DetailViewModel> {
                     children: [
                       _buildUserInfo(
                         icon: Icons.photo,
-                        label: context.tr('image_detail.user_photos'),
+                        label: 'image_detail.user_photos'.tr(),
                         value: image.user.totalPhotos.toString(),
                       ),
                       _buildUserInfo(
                         icon: Icons.collections,
-                        label: context.tr('image_detail.user_collections'),
+                        label: 'image_detail.user_collections'.tr(),
                         value: image.user.totalCollections.toString(),
                       ),
                       _buildUserInfo(
                         icon: Icons.thumb_up,
-                        label: context.tr('image_detail.user_likes'),
+                        label: 'image_detail.user_likes'.tr(),
                         value: image.user.totalLikes.toString(),
                       ),
                     ],

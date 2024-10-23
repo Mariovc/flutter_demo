@@ -31,7 +31,7 @@ class ErrorCard extends StatelessWidget {
               if (onRetry != null)
                 ElevatedButton(
                   onPressed: onRetry,
-                  child: Text(context.tr('common.retry_button')),
+                  child: Text('common.retry_button'.tr()),
                 ),
             ],
           ),

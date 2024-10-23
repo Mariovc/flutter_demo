@@ -40,7 +40,7 @@ class _HomePageState
           SliverAppBar(
             pinned: true,
             centerTitle: true,
-            title: Text(context.tr('home.title')),
+            title: Text('home.title'.tr()),
             forceElevated: innerBoxIsScrolled,
           ),
           SliverAppBar(
@@ -52,7 +52,7 @@ class _HomePageState
               focusNode: _focusNode,
               onTapOutside: (event) => _focusNode.unfocus(),
               decoration: InputDecoration(
-                hintText: context.tr('home.search_hint'),
+                hintText: 'home.search_hint'.tr(),
                 hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(context)
                           .colorScheme
@@ -86,8 +86,8 @@ class _HomePageState
             ),
             noItemsFoundIndicatorBuilder: (context) => Center(
               child: ErrorPlacehoder(
-                title: context.tr('home.no_results_title'),
-                subtitle: context.tr('home.no_results_message'),
+                title: 'home.no_results_title'.tr(),
+                subtitle: 'home.no_results_message'.tr(),
                 icon: Icons.search,
               ),
             ),

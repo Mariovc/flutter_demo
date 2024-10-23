@@ -7,12 +7,12 @@ ImageEntity createImage() {
   return ImageEntity(
     id: '1',
     description: 'Test Image',
-    url: 'https://via.placeholder.com/150',
+    url: 'https://images.unsplash.com/photo-1472396961693-142e6e269027',
     likes: 0,
     user: ImageUser(
       name: 'Test User',
       instagramUsername: 'testuser',
-      profileImage: 'https://via.placeholder.com/150',
+      profileImage: 'https://images.unsplash.com/photo-1472396961693-142e6e269027',
       totalCollections: 1,
       totalLikes: 1,
       totalPhotos: 1,
