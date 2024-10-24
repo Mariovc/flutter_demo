@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:images/domain/entities/image_entity.dart';
 import 'package:images/domain/usecases/get_images_usecase.dart';
 import 'package:images/presentation/navigation/main_navigation.dart';
+import 'package:images/presentation/util/error_extension.dart';
 import 'package:images/presentation/viewmodels/root_viewmodel.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:injectable/injectable.dart';
@@ -41,22 +41,23 @@ class HomeViewModel extends RootViewModel<HomeViewModelState> {
   }
 
   Future<void> fetchPage(int pageKey) async {
-    try {
-      final newItems = await _getImagesUseCase(
-        query: _query,
-        pageSize: _pageSize,
-        page: pageKey,
-      );
-      final isLastPage = newItems.length < _pageSize;
-      if (isLastPage) {
-        _pagingController.appendLastPage(newItems);
-      } else {
-        final nextPageKey = pageKey + 1;
-        _pagingController.appendPage(newItems, nextPageKey);
-      }
-    } on DioException catch (error) {
-      _pagingController.error = error.response?.data ?? error.message;
-    }
+    final result = await _getImagesUseCase(
+      query: _query,
+      pageSize: _pageSize,
+      page: pageKey,
+    );
+    result.fold(
+      (error) => _pagingController.error = error.message,
+      (newItems) {
+        final isLastPage = newItems.length < _pageSize;
+        if (isLastPage) {
+          _pagingController.appendLastPage(newItems);
+        } else {
+          final nextPageKey = pageKey + 1;
+          _pagingController.appendPage(newItems, nextPageKey);
+        }
+      },
+    );
   }
 
   void search(String value) {

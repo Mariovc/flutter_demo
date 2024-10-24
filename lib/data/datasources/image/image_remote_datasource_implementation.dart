@@ -1,38 +1,50 @@
-import 'package:dio/dio.dart';
+import 'package:either_dart/either.dart';
 import 'package:images/core/di/environment.dart';
 import 'package:images/data/datasources/image/image_remote_datasource.dart';
 import 'package:images/data/models/search_result_dto.dart';
+import 'package:images/data/services/api_service.dart';
+import 'package:images/domain/entities/errors.dart';
 import 'package:images/domain/entities/image_entity.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: ImageRemoteDatasource)
 class ImageRepositoryImpl implements ImageRemoteDatasource {
-  final Dio dio;
-  final Env envConfig;
+  final ApiService _apiService;
+  final Env _envConfig;
   final String _defaultQuery = '*';
 
-  ImageRepositoryImpl(this.dio, this.envConfig);
+  ImageRepositoryImpl(this._apiService, this._envConfig);
 
   @override
-  Future<List<ImageEntity>> getImages({
+  Future<Either<MainError, List<ImageEntity>>> getImages({
     required String query,
     required int pageSize,
     required int page,
   }) async {
     // Fetch images using dio
-    final response = await dio.getUri(
+    final response = await _apiService.get<Map<String, dynamic>>(
       Uri.https(
-        envConfig.baseUrl,
+        _envConfig.baseUrl,
         '/search/photos',
         {
           'query': query.isEmpty ? _defaultQuery : query,
           'page': page.toString(),
-          'client_id': envConfig.apiKey,
+          'client_id': _envConfig.apiKey,
         },
       ),
     );
 
-    final result = SearchResultDto.fromJson(response.data);
-    return result.results.map((e) => e.toEntity()).toList();
+    // return response.either(
+    //   (left) => left,
+    //   (right) {
+    //     final result = SearchResultDto.fromJson(right);
+    //     return result.results.map((e) => e.toEntity()).toList();
+    //   },
+    // );
+    return response.map((data) {
+      final result = SearchResultDto.fromJson(data);
+      return result.results.map((e) => e.toEntity()).toList();
+      
+    });
   }
 }

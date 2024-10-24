@@ -8,7 +8,6 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:images/core/di/environment.dart' as _i925;
 import 'package:images/core/di/injection.dart' as _i439;
@@ -17,7 +16,7 @@ import 'package:images/data/datasources/image/image_remote_datasource.dart'
 import 'package:images/data/datasources/image/image_remote_datasource_implementation.dart'
     as _i976;
 import 'package:images/data/repositories/image_repository_impl.dart' as _i711;
-import 'package:images/data/services/dio_service.dart' as _i178;
+import 'package:images/data/services/api_service.dart' as _i618;
 import 'package:images/domain/repositories/image_repository.dart' as _i64;
 import 'package:images/domain/usecases/get_images_usecase.dart' as _i509;
 import 'package:images/presentation/navigation/main_navigation.dart' as _i873;
@@ -37,13 +36,13 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final diModule = _$DiModule();
-    final dioService = _$DioService();
+    final apiServiceModule = _$ApiServiceModule();
     gh.factory<_i897.DetailViewModel>(() => _i897.DetailViewModel());
     gh.singleton<_i925.Env>(() => diModule.env);
     gh.singleton<_i873.MainNavigation>(() => diModule.navigator);
-    gh.lazySingleton<_i361.Dio>(() => dioService.dio);
+    gh.lazySingleton<_i618.ApiService>(() => apiServiceModule.httpClient);
     gh.factory<_i246.ImageRemoteDatasource>(() => _i976.ImageRepositoryImpl(
-          gh<_i361.Dio>(),
+          gh<_i618.ApiService>(),
           gh<_i925.Env>(),
         ));
     gh.factory<_i64.ImageRepository>(
@@ -60,4 +59,4 @@ extension GetItInjectableX on _i174.GetIt {
 
 class _$DiModule extends _i439.DiModule {}
 
-class _$DioService extends _i178.DioService {}
+class _$ApiServiceModule extends _i618.ApiServiceModule {}
