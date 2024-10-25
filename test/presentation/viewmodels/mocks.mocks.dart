@@ -5,12 +5,15 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i5;
 
+import 'package:either_dart/either.dart' as _i6;
 import 'package:go_router/go_router.dart' as _i3;
-import 'package:images/domain/entities/image_entity.dart' as _i6;
+import 'package:images/domain/entities/errors.dart' as _i7;
+import 'package:images/domain/entities/image_entity.dart' as _i8;
 import 'package:images/domain/repositories/image_repository.dart' as _i2;
 import 'package:images/domain/usecases/get_images_usecase.dart' as _i4;
-import 'package:images/presentation/navigation/main_navigation.dart' as _i7;
+import 'package:images/presentation/navigation/main_navigation.dart' as _i10;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i9;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -64,7 +67,7 @@ class MockGetImagesUseCase extends _i1.Mock implements _i4.GetImagesUseCase {
       ) as _i2.ImageRepository);
 
   @override
-  _i5.Future<List<_i6.ImageEntity>> call({
+  _i5.Future<_i6.Either<_i7.MainError, List<_i8.ImageEntity>>> call({
     required String? query,
     required int? pageSize,
     required int? page,
@@ -79,15 +82,27 @@ class MockGetImagesUseCase extends _i1.Mock implements _i4.GetImagesUseCase {
             #page: page,
           },
         ),
-        returnValue:
-            _i5.Future<List<_i6.ImageEntity>>.value(<_i6.ImageEntity>[]),
-      ) as _i5.Future<List<_i6.ImageEntity>>);
+        returnValue: _i5
+            .Future<_i6.Either<_i7.MainError, List<_i8.ImageEntity>>>.value(
+            _i9.dummyValue<_i6.Either<_i7.MainError, List<_i8.ImageEntity>>>(
+          this,
+          Invocation.method(
+            #call,
+            [],
+            {
+              #query: query,
+              #pageSize: pageSize,
+              #page: page,
+            },
+          ),
+        )),
+      ) as _i5.Future<_i6.Either<_i7.MainError, List<_i8.ImageEntity>>>);
 }
 
 /// A class which mocks [MainNavigation].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockMainNavigation extends _i1.Mock implements _i7.MainNavigation {
+class MockMainNavigation extends _i1.Mock implements _i10.MainNavigation {
   MockMainNavigation() {
     _i1.throwOnMissingStub(this);
   }
@@ -102,7 +117,7 @@ class MockMainNavigation extends _i1.Mock implements _i7.MainNavigation {
       ) as _i3.GoRouter);
 
   @override
-  _i5.Future<void> navigateToDetail(_i6.ImageEntity? image) =>
+  _i5.Future<void> navigateToDetail(_i8.ImageEntity? image) =>
       (super.noSuchMethod(
         Invocation.method(
           #navigateToDetail,

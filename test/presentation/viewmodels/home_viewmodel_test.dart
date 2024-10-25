@@ -1,6 +1,9 @@
-import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:either_dart/either.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:images/domain/entities/errors.dart';
+import 'package:images/domain/entities/image_entity.dart';
 import 'package:images/presentation/viewmodels/home_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 
@@ -16,6 +19,7 @@ void main() {
     mockGetImagesUseCase = MockGetImagesUseCase();
     mockMainNavigation = MockMainNavigation();
     viewModel = HomeViewModel(mockMainNavigation, mockGetImagesUseCase);
+    provideDummy<Either<MainError, List<ImageEntity>>>(const Right([]));
   });
 
   tearDown(() {
@@ -33,7 +37,7 @@ void main() {
       query: anyNamed('query'),
       pageSize: anyNamed('pageSize'),
       page: anyNamed('page'),
-    )).thenAnswer((_) async => [image]);
+    )).thenAnswer((_) async => Right([image]));
 
     await viewModel.fetchPage(1);
 
@@ -47,7 +51,7 @@ void main() {
       query: anyNamed('query'),
       pageSize: anyNamed('pageSize'),
       page: anyNamed('page'),
-    )).thenAnswer((_) async => [image]);
+    )).thenAnswer((_) async => Right([image]));
 
     await viewModel.fetchPage(1);
     expect(viewModel.controller.itemList, [image]);
@@ -74,7 +78,7 @@ void main() {
       query: anyNamed('query'),
       pageSize: anyNamed('pageSize'),
       page: anyNamed('page'),
-    )).thenAnswer((_) async => [image]);
+    )).thenAnswer((_) async => Right([image]));
 
     await viewModel.fetchPage(1);
     expect(viewModel.controller.itemList, [image]);
@@ -88,16 +92,10 @@ void main() {
       query: anyNamed('query'),
       pageSize: anyNamed('pageSize'),
       page: anyNamed('page'),
-    )).thenThrow(
-      DioException(
-        requestOptions: RequestOptions(),
-        response: Response(
-            requestOptions: RequestOptions(), data: 'Failed to load images'),
-      ),
-    );
+    )).thenAnswer((_) async => Left(ServerError()));
 
     await viewModel.fetchPage(1);
 
-    expect(viewModel.controller.error, 'Failed to load images');
+    expect(viewModel.controller.error, 'errors.server'.tr());
   });
 }

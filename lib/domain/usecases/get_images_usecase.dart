@@ -1,3 +1,5 @@
+import 'package:either_dart/either.dart';
+import 'package:images/domain/entities/errors.dart';
 import 'package:images/domain/entities/image_entity.dart';
 import 'package:images/domain/repositories/image_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -8,7 +10,7 @@ class GetImagesUseCase {
 
   GetImagesUseCase(this.repository);
 
-  Future<List<ImageEntity>> call(
+  Future<Either<MainError, List<ImageEntity>>> call(
    { required String query,
     required int pageSize,
     required int page,}
