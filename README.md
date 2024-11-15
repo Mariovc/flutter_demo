@@ -2,11 +2,13 @@
 
 ## Introduction
 
-This project showcases Clean Architecture in Flutter, utilizing the MVVM design pattern.
+This project showcases **Clean Architecture** in Flutter, utilizing the MVVM design pattern.
 
 ![architecture](./art/clean_architecture_mvvm.jpg)
 
-Demo:
+It uses [Unspash API](https://unsplash.com/) to show a list of images in a tiled format. The home page have a search bar that the user can type into to search for images. Search results are presented using **paging** and **infinite scroll**. Tapping an image navigates to a detail screen showing image details.
+
+## Screenshots
 
 ![demo](./art/demo.gif)
 
@@ -29,7 +31,7 @@ The application has two environments and each one has its own configuration file
 - dev: `.env/dev.json`
 - prod: `.env/prod.json`
 
-Inside each one, you can find sensitive information that shouldn't be committed to this repository. However, I have included it to provide an easy way to launch this project. Please, **replace the API key** with your own.
+Inside each one, you can find sensitive information that shouldn't be committed to this repository. However, I have included it to provide an easy way to launch this project. Please, **replace the API key** with your own [Unsplash](https://unsplash.com/) API key.
 
 ## Run and build
 

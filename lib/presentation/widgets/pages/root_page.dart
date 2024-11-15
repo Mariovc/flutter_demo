@@ -30,8 +30,8 @@ abstract class RootPageStateful<T extends ViewState,
   RootScreenState<T, V, RootPageStateful<T, V>> createState();
 }
 
-abstract class RootScreenState<T extends ViewState, V extends RootViewModel<T>,
-    K extends RootPageStateful<T, V>> extends State<K> {
+abstract class RootScreenState<S extends ViewState, V extends RootViewModel<S>,
+    K extends RootPageStateful<S, V>> extends State<K> {
   late final V viewModel;
 
   @override
@@ -42,7 +42,7 @@ abstract class RootScreenState<T extends ViewState, V extends RootViewModel<T>,
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<V, T>(
+    return BlocConsumer<V, S>(
       bloc: viewModel,
       builder: (context, state) {
         return buildView(context, state, viewModel);
@@ -51,7 +51,7 @@ abstract class RootScreenState<T extends ViewState, V extends RootViewModel<T>,
     );
   }
 
-  Widget buildView(BuildContext context, T state, V viewModel);
+  Widget buildView(BuildContext context, S state, V viewModel);
 
-  void listenState(BuildContext context, T state) {}
+  void listenState(BuildContext context, S state) {}
 }
