@@ -34,13 +34,6 @@ class ImageRepositoryImpl implements ImageRemoteDatasource {
       ),
     );
 
-    // return response.either(
-    //   (left) => left,
-    //   (right) {
-    //     final result = SearchResultDto.fromJson(right);
-    //     return result.results.map((e) => e.toEntity()).toList();
-    //   },
-    // );
     return response.map((data) {
       final result = SearchResultDto.fromJson(data);
       return result.results.map((e) => e.toEntity()).toList();
