@@ -3,7 +3,7 @@
         "retry_button": "Retry"
     },
     "home": {
-        "title": "Home",
+        "title": "Unsplash",
         "search_hint": "Search ...",
         "no_results_title": "No results found",
         "no_results_message": "Try searching with different keywords."

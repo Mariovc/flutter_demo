@@ -40,7 +40,13 @@ class _HomePageState
           SliverAppBar(
             pinned: true,
             centerTitle: true,
-            title: Text('home.title'.tr()),
+            title: Text(
+              'home.title'.tr(),
+              style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
             forceElevated: innerBoxIsScrolled,
           ),
           SliverAppBar(
@@ -76,7 +82,7 @@ class _HomePageState
           )
         ],
         body: PagedGridView<int, ImageEntity>(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           pagingController: viewModel.controller,
           builderDelegate: PagedChildBuilderDelegate<ImageEntity>(
             itemBuilder: _getItem,
